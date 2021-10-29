@@ -219,7 +219,7 @@ function processResponse(asin, meta, goodreadsLink, last) {
     log(votesHtml);
     log(removeTags(votesHtml)
         .trim());
-    // Clean html 
+    // Clean html
     var reviewCount = removeTags(averageHtml)
         .trim() + " from " + removeTags(votesHtml)
         .trim();
@@ -325,7 +325,7 @@ function SelectById(idArray) {
 function checkIfBook() {
     log("checkIfBook");
     // Audible
-    if (isAudibleCom) return window.location.href.indexOf("audible.com/pd") > 0;
+    if (isAudibleCom) return window.location.href.includes("audible.com/pd") || window.location.href.includes("audible.co.uk/pd");
     // Amazon
     var bookDetectionIdArray = ["ebooksImageBlockOuter", "booksTitle", "bookEdition", "pBookUpsellBorrowButton", "booksImageBlock_feature_div"];
     return SelectById(bookDetectionIdArray) !== null;
@@ -337,13 +337,13 @@ function checkIfBook() {
 var asinFound = false;
 var startTime = Date.now();
 // Check if the domain is Amazon or Audible
-isAudibleCom = window.location.hostname.indexOf("audible.com") > 0;
+isAudibleCom = window.location.hostname.includes("audible.com") || window.location.hostname.includes("audible.co.uk");
 log("isAudibleCom = " + isAudibleCom);
 if (checkIfBook()) {
     log("Is book page");
     var asinChecker = window.setInterval(function() {
         intervalsPassed++;
-        log("Inverval number " + intervalsPassed);
+        log("Interval number " + intervalsPassed);
         var asin = getASIN();
         log("asin array length: " + asin.length);
         // Is ASIN found, stop and retrieve book info
